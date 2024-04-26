@@ -1,19 +1,22 @@
 package dev.galex.process.death.appium.flows
 
 import dev.galex.process.death.appium.AppiumSetup
+import dev.galex.process.death.appium.extensions.killApp
+import dev.galex.process.death.appium.extensions.restart
+import dev.galex.process.death.appium.extensions.triggerProcessDeath
 import io.appium.java_client.AppiumBy
+import io.appium.java_client.android.nativekey.AndroidKey
+import io.appium.java_client.android.nativekey.KeyEvent
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-class BasicFlow: AppiumSetup() {
+class EnterNameProcessDeathFlow : AppiumSetup() {
 
     @Test
-    fun `Fills up name and see it in next screen`() {
-
-        driver.activateApp(PACKAGE_NAME)
+    fun `Basic Flow + Process Death`() {
 
         // Finds the TextView
         val textView: WebElement = driver.findElement(AppiumBy.id("dev.galex.process.death.demo:id/enter_name"))
@@ -26,12 +29,16 @@ class BasicFlow: AppiumSetup() {
         // Clicks on the button
         button.click()
 
+        // Puts app in background
+        driver.pressKey(KeyEvent(AndroidKey.HOME))
+
+        // Trigger Process Death (kill + restart app)
+        driver.triggerProcessDeath()
+
         // Gets the string presented in the ShowName TextView
         val showNameText = driver.findElement(AppiumBy.id("dev.galex.process.death.demo:id/show_name")).text
 
-        // Checks that we really see what we expect in this screen
-        assertEquals(showNameText, "Name = John Doe")
-
-        driver.quit()
+        // We should also be getting "Name = John Doe in this case, but we're getting "Name = null" so this assertion fails
+        assertEquals("Name = John Doe", showNameText)
     }
 }

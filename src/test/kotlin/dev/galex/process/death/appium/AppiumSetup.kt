@@ -14,7 +14,7 @@ open class AppiumSetup {
 
     companion object {
 
-        private const val ACTIVITY_NAME = "dev.galex.process.death.demo.MainActivity"
+        const val ACTIVITY_NAME = "dev.galex.process.death.demo.MainActivity"
         const val PACKAGE_NAME = "dev.galex.process.death.demo"
         private const val AUTOMATION_NAME = "UiAutomator2"
         private const val PLATFORM_NAME = "Android"
@@ -35,6 +35,7 @@ open class AppiumSetup {
                 .setAutoGrantPermissions(true)
 
             driver = AndroidDriver(URL(SERVER_URL), options)
+            driver.activateApp(PACKAGE_NAME)
         }
 
         @JvmStatic
