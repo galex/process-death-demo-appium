@@ -1,6 +1,6 @@
 package dev.galex.process.death.appium.flows
 
-import dev.galex.process.death.appium.AppiumSetup
+import dev.galex.process.death.appium.utils.BaseAppiumTest
 import dev.galex.process.death.appium.extensions.killApp
 import dev.galex.process.death.appium.extensions.restart
 import io.appium.java_client.AppiumBy
@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-class EnterNameProcessDeathFlow : AppiumSetup() {
+class EnterNameProcessDeathFlow : BaseAppiumTest() {
 
     @Test
     fun `Basic Flow + Process Death`() {
@@ -30,7 +30,7 @@ class EnterNameProcessDeathFlow : AppiumSetup() {
 
         // Puts app in background
         driver.pressKey(KeyEvent(AndroidKey.HOME))
-        // Wait for a bit for putting the app in the background
+        // Wait for a bit
         Thread.sleep(1_000)
         // Kills the app via adb shell am kill
         driver.killApp()
@@ -44,7 +44,7 @@ class EnterNameProcessDeathFlow : AppiumSetup() {
         // Gets the string presented in the ShowName TextView
         val showNameText = driver.findElement(AppiumBy.id("dev.galex.process.death.demo:id/show_name")).text
 
-        // We should also be getting "Name = John Doe in this case, but we're getting "Name = null" so this assertion fails
+        // Checks that we really see what we expect in this screen
         assertEquals("Name = John Doe", showNameText)
     }
 }

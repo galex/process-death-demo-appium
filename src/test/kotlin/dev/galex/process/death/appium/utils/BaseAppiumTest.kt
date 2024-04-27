@@ -1,29 +1,23 @@
-package dev.galex.process.death.appium
+package dev.galex.process.death.appium.utils
 
 import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.android.options.UiAutomator2Options
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME
 import java.net.URL
 
 
-open class AppiumSetup {
+open class BaseAppiumTest {
 
     companion object {
 
-        const val ACTIVITY_NAME = "dev.galex.process.death.demo.MainActivity"
-        const val PACKAGE_NAME = "dev.galex.process.death.demo"
-        private const val AUTOMATION_NAME = "UiAutomator2"
-        private const val PLATFORM_NAME = "Android"
-        private const val SERVER_URL = "http://127.0.0.1:4723"
-
         lateinit var driver: AndroidDriver
-
 
         @JvmStatic
         @BeforeAll
         fun setUp() {
-
+            //
             val options = UiAutomator2Options()
                 .setPlatformName(PLATFORM_NAME)
                 .setAppPackage(PACKAGE_NAME)

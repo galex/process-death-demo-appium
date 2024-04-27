@@ -1,6 +1,6 @@
 package dev.galex.process.death.appium.flows
 
-import dev.galex.process.death.appium.AppiumSetup
+import dev.galex.process.death.appium.utils.BaseAppiumTest
 import io.appium.java_client.AppiumBy
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.WebElement
@@ -8,10 +8,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-class EnterNameFlow: AppiumSetup() {
+class EnterNameFlow: BaseAppiumTest() {
 
     @Test
-    fun `Basic Flow`() {
+    fun `Basic Happy Flow`() {
 
         // Finds the TextView
         val textView: WebElement = driver.findElement(AppiumBy.id("dev.galex.process.death.demo:id/enter_name"))
@@ -28,6 +28,6 @@ class EnterNameFlow: AppiumSetup() {
         val showNameText = driver.findElement(AppiumBy.id("dev.galex.process.death.demo:id/show_name")).text
 
         // Checks that we really see what we expect in this screen
-        assertEquals(showNameText, "Name = John Doe")
+        assertEquals("Name = John Doe", showNameText)
     }
 }
